@@ -1,0 +1,39 @@
+:root {
+  --royal-blue: rgb(65, 105, 225);
+  --navy-blue: rgb(0, 0, 128);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+#search-card {
+  border: none;
+}
+
+.daily-forecast {
+  width: 18%;
+  padding: 5px 8px;
+}
+
+header {
+  background: linear-gradient(to right, var(--royal-blue), var(--navy-blue));
+  color: white;
+  text-align: right;
+  margin-bottom: 10px;
+}
+
+h1 {
+  margin-right: 25%;
+}
+
+.today-container,
+.forecast-container {
+  margin: 5px;
+}

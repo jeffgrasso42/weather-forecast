@@ -10,9 +10,75 @@
 </head>
 <body>
   <!-- header that says weather dashboard -->
-  <!-- 3/12 col search and city selector -->
-  <!-- 9/12 col weather dashboard -->
-  <!-- 9/12 col for 5-day forecast -->
+  <header class="container-fluid">
+    <h1>Weather Dashboard</h1>
+  </header>
+  <main class="d-flex container-fluid">
+    <!-- 3/12 col search and city selector -->
+    <aside id="search-card" class="card col-3">
+      <h2>Search for a City:</h2>
+      <input type="text" placeholder="Enter a city">
+      <button type="button" class="btn btn-primary">Search</button>
+
+      <hr>
+
+      <button type="button" class="btn btn-secondary">Atlanta</button>
+      <button type="button" class="btn btn-secondary">Denver</button>
+      <button type="button" class="btn btn-secondary">Seattle</button>
+      <button type="button" class="btn btn-secondary">San Fransisco</button>
+      <button type="button" class="btn btn-secondary">Orlando</button>
+      <button type="button" class="btn btn-secondary">New York</button>
+      <button type="button" class="btn btn-secondary">Chicago</button>
+      <button type="button" class="btn btn-secondary">Austin</button>
+    </aside>
+    <section class="container col-9">
+
+      <!-- 9/12 col weather dashboard -->
+      <div class="today-container border border-dark p-1">
+        <h2 id="current-location" data-city="" data-date="">Atlanta</h2>
+        <p id="temp">Temp: 76.62def F</p>
+        <p id="wind">Wind: 8.43 MPH</p>
+        <p id="humidity">Humidity: 44%</p>
+      </div>
+      
+      <!-- 9/12 col for 5-day forecast -->
+      <div class="forecast-container">
+        <h3>5-Day Forecast:</h3>
+        <div class="card-container d-flex flex-wrap justify-content-around">
+          <div id="day-1" class="card daily-forecast">
+            <h4 data-city="" data-date="">Atlanta</h4>
+            <p id="temp">Temp: 76.62def F</p>
+            <p id="wind">Wind: 8.43 MPH</p>
+            <p id="humidity">Humidity: 44%</p>
+          </div>
+          <div id="day-2" class="card daily-forecast">
+            <h4 data-city="" data-date="">Atlanta</h4>
+            <p id="temp">Temp: 76.62def F</p>
+            <p id="wind">Wind: 8.43 MPH</p>
+            <p id="humidity">Humidity: 44%</p>
+          </div>
+          <div id="day-3" class="card daily-forecast">
+            <h4 data-city="" data-date="">Atlanta</h4>
+            <p id="temp">Temp: 76.62def F</p>
+            <p id="wind">Wind: 8.43 MPH</p>
+            <p id="humidity">Humidity: 44%</p>
+          </div>
+          <div id="day-4" class="card daily-forecast">
+            <h4 data-city="" data-date="">Atlanta</h4>
+            <p id="temp">Temp: 76.62def F</p>
+            <p id="wind">Wind: 8.43 MPH</p>
+            <p id="humidity">Humidity: 44%</p>
+          </div>
+          <div id="day-5" class="card daily-forecast">
+            <h4 data-city="" data-date="">Atlanta</h4>
+            <p id="temp">Temp: 76.62def F</p>
+            <p id="wind">Wind: 8.43 MPH</p>
+            <p id="humidity">Humidity: 44%</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
   <script src="https://api.openweathermap.org/data/2.5/weather?lat=40.7127281&lon=-74.0060152&appid=66b15a5b3951d15de56c5d2c4e2ddcba&units=imperial">
   </script>
   <script src="./assets/js/script.js"></script>
