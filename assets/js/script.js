@@ -36,6 +36,7 @@ function storeCity(city) {
 
   citiesArray.push(city);
   localStorage.setItem('cities', JSON.stringify(citiesArray));
+  renderCities();
 }
 
 // checkSelection function that handles user input
@@ -44,7 +45,9 @@ function checkSelection(e) {
     var userInput = document.getElementById('search-bar').value;
     getWeather(userInput);
     storeCity(userInput);
-  } 
+  } else {
+    getWeather(e.target.innerHTML);
+  }
 }
 
 // Get the latitude and longitude for the weather API call
@@ -129,6 +132,7 @@ function renderForecast(data) {
 
 // Display previously searched cities
 function renderCities() {
+  searchHistoryEl.innerHTML = '';
   if (citiesArray !== null) {
     for (i = 0; i < citiesArray.length; i++) {
       searchHistoryEl.innerHTML += 
