@@ -1,9 +1,3 @@
-// ASSIGNMENT CODE
-
-// variable for the API key
-var weatherKey = '66b15a5b3951d15de56c5d2c4e2ddcba';
-
-
 // DEPENDENCIES
 
 // variable for the button elements' container element
@@ -18,6 +12,14 @@ var day3El = document.getElementById('day-3');
 var day4El = document.getElementById('day-4');
 var day5El = document.getElementById('day-5');
 
+// ASSIGNMENT CODE
+
+// variable for the API key
+var weatherKey = '66b15a5b3951d15de56c5d2c4e2ddcba';
+
+// DATA
+var citiesArray = [];
+
 // FUNCTIONS
 
 // init function that displays default city weather forecast
@@ -27,8 +29,18 @@ function init() {
 // Retrieve search history from local storage on load
 
 // Store searched city in local storage
+function storeCity(city) {
+
+}
 
 // checkSelection function that handles user input
+function checkSelection(e) {
+  if (e.target.id === 'submit-btn') {
+    var userInput = document.getElementById('search-bar').value;
+    getWeather(userInput);
+    storeCity(userInput);
+  } 
+}
 
 // Get the latitude and longitude for the weather API call
 function getWeather(city) {
@@ -69,8 +81,10 @@ function getIcon(iconKey) {
 
 // Display todays weather in the DOM
 function renderWeather(data) {
+  console.log(data);
+  var icon = getIcon(data.weather[0].id);
   // display city name in h2 element
-  todayContainerEl.children[0].innerHTML = data.name;
+  todayContainerEl.children[0].innerHTML = data.name + ' ' + icon;
   // display temperature in p element
   todayContainerEl.children[1].innerHTML = data.main.temp + "&deg; F";
   // display wind speed in p element
@@ -114,5 +128,5 @@ init();
 // EVENT LISTENERS
 
 // click event listener on the search-card element
-// searchCardEl.addEventListener('click', checkSelection);
+searchCardEl.addEventListener('click', checkSelection);
 
