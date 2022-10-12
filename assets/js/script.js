@@ -45,10 +45,14 @@ function storeCity(city) {
 
 // checkSelection function that handles user input
 function checkSelection(e) {
+  // check if submit input was clicked
   if (e.target.id === 'submit-btn') {
+    // exit function if there was no input
+    if (searchBarEl.value === "") return;
     var userInput = searchBarEl.value;
     getWeather(userInput);
     storeCity(userInput);
+    // check if 
   } else if (e.target.id === 'search-bar')  return;
   else if (e.target.tagName === 'BUTTON') {
     getWeather(e.target.innerHTML);
@@ -60,9 +64,17 @@ function getWeather(city) {
   // Current Weather API call
   var weatherURL = 'https://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=' + weatherKey + '&units=imperial';
   fetch(weatherURL).then(weatherResponse => {
+    if (!weatherResponse.ok) {
+      searchBarEl.value = "";
+      searchBarEl.placeholder = "Invalid City Name"
+      throw new Error("Whoops something went wrong");
+    }
     return weatherResponse.json();
   }).then(weatherData => {
+    console.log(weatherData);
     renderWeather(weatherData);
+  }).catch((error) => {
+    console.error('Error:', error);
   });
 
   // 5-day Forecast API call
