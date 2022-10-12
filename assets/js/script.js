@@ -3,6 +3,7 @@
 // variable for the button elements' container element
 var searchCardEl = document.getElementById('search-card');
 // variable for the current weather container
+var searchBarEl = document.getElementById('search-bar');
 var todayContainerEl = document.querySelector('.today-container');
 // variables for the 5-day forecast cards
 var forecastCardContainerEl = document.getElementById('card-container');
@@ -21,7 +22,9 @@ var citiesArray = [];
 // init function that displays default city weather forecast
 function init() {
   getWeather('New York');
-  citiesArray = getCities();
+  var storedCities = getCities();
+  if (storedCities !== null) citiesArray = storedCities;
+
   renderCities();
 }
 // Retrieve search history from local storage on load
@@ -32,8 +35,9 @@ function getCities() {
 // Store searched city in local storage
 function storeCity(city) {
   var storedCities = getCities();
-  if (storedCities !== null) citiesArray = storedCities;
-
+  if (storedCities !== null) {
+    citiesArray = storedCities;
+  } 
   citiesArray.push(city);
   localStorage.setItem('cities', JSON.stringify(citiesArray));
   renderCities();
@@ -42,10 +46,11 @@ function storeCity(city) {
 // checkSelection function that handles user input
 function checkSelection(e) {
   if (e.target.id === 'submit-btn') {
-    var userInput = document.getElementById('search-bar').value;
+    var userInput = searchBarEl.value;
     getWeather(userInput);
     storeCity(userInput);
-  } else {
+  } else if (e.target.id === 'search-bar')  return;
+  else if (e.target.tagName === 'BUTTON') {
     getWeather(e.target.innerHTML);
   }
 }
@@ -89,7 +94,6 @@ function getIcon(iconKey) {
 
 // Display todays weather in the DOM
 function renderWeather(data) {
-  console.log(data);
   var icon = getIcon(data.weather[0].id);
   // display city name in h2 element
   todayContainerEl.children[0].innerHTML = data.name + ' ' + icon;
@@ -105,7 +109,6 @@ function renderWeather(data) {
 function renderForecast(data) {
   // store 40 hourly forecast objects only
   var forecastObjects = data.list;
-  console.log(forecastObjects);
 
   // 1 iteration for each day in the forecastObjects
   for (var i = 0; i < (forecastObjects.length / 8); i++) {
