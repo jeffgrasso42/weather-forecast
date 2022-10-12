@@ -2,10 +2,6 @@
 
 // variable for the API key
 var weatherKey = '66b15a5b3951d15de56c5d2c4e2ddcba';
-// variables for the lattitude and longitude
-let lat = '';
-let lon = '';
-var weatherData;
 
 
 // DEPENDENCIES
@@ -49,32 +45,67 @@ function getWeather(city) {
   fetch(forecastURL).then(forecastResponse => {
     return forecastResponse.json();
   }).then(forecastData => {
-    console.log(forecastData);
     renderForecast(forecastData);
   });
 }
 
+function getIcon(iconKey) {
+  iconString = iconKey.toString();
+  // check if weather ID passed to icon key
+  if (iconString === '800') return '☀️'; // 800 = clear/sunny
+  // other weather IDs in the 800s indicate cloudy
+  else if (iconString.startsWith('8') && (iconString !== '800')) return '⛅';
+  // weather IDs in the 700s indicate atmospheric conditions such as fog
+  else if (iconString.startsWith('7')) return '🌫️';
+  // weather IDs in the 600s indicate snow
+  else if (iconString.startsWith('6')) return '🌨️';
+  // weather IDs in the 500s and 300s indicate heavy and light rain respectively
+  else if (iconString.startsWith('5') || iconString.startsWith('3')) return '🌧️';
+  // all other weather IDs indicate thunderstorms
+  else return '⛈️';
+}
+
 // RENDERING FUNCTIONS
 
+// Display todays weather in the DOM
 function renderWeather(data) {
+  // display city name in h2 element
   todayContainerEl.children[0].innerHTML = data.name;
+  // display temperature in p element
   todayContainerEl.children[1].innerHTML = data.main.temp + "&deg; F";
+  // display wind speed in p element
   todayContainerEl.children[2].innerHTML = data.wind.speed + " MPH";
+  // display humidity in p element
   todayContainerEl.children[3].innerHTML = data.main.humidity + "&#37;";
 }
 
+// Display 5 day forecast in the DOM
 function renderForecast(data) {
-  console.log(data.list[0].dt_txt);
-  var forecastDays = data.list;
-  console.log(forecastDays);
-for (var i = 0; i < forecastDays.length; i++) {
-  var date = forecastDays[i*8].dt_txt;
-  forecastCardContainerEl.children[i].children[0].innerHTML = moment(date).format('MM/DD/YYYY');
-  forecastCardContainerEl.children[i].children[1].innerHTML = 'icon';
-  forecastCardContainerEl.children[i].children[2].innerHTML = forecastDays[i*8].main.temp + "&deg; F";
-  forecastCardContainerEl.children[i].children[3].innerHTML = forecastDays[i*8].wind.speed + " MPH";
-  forecastCardContainerEl.children[i].children[4].innerHTML = forecastDays[i*8].main.humidity + "&#37;"
-}
+  // store 40 hourly forecast objects only
+  var forecastObjects = data.list;
+  console.log(forecastObjects);
+
+  // 1 iteration for each day in the forecastObjects
+  for (var i = 0; i < (forecastObjects.length / 8); i++) {
+    // skip 8 hourly entries to get to next day forecast 
+    var dayIdx = i * 8;
+
+    // store formatted date
+    var date = moment(forecastObjects[dayIdx].dt_txt).format('MM/DD/YYYY');
+
+    var icon = getIcon(forecastObjects[dayIdx].weather[0].id);
+
+    // display date in h4 element
+    forecastCardContainerEl.children[i].children[0].innerHTML = date;
+    // display icon in p element
+    forecastCardContainerEl.children[i].children[1].innerHTML = icon;
+    // display temperature in p element
+    forecastCardContainerEl.children[i].children[2].innerHTML = forecastObjects[dayIdx].main.temp + "&deg; F";
+    // display wind speed in p element
+    forecastCardContainerEl.children[i].children[3].innerHTML = forecastObjects[dayIdx].wind.speed + " MPH";
+    // display humidity in p element
+    forecastCardContainerEl.children[i].children[4].innerHTML = forecastObjects[dayIdx].main.humidity + "&#37;"
+  }
 }
 
 // INITIALIZATION
