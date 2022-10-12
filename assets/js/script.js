@@ -6,11 +6,7 @@ var searchCardEl = document.getElementById('search-card');
 var todayContainerEl = document.querySelector('.today-container');
 // variables for the 5-day forecast cards
 var forecastCardContainerEl = document.getElementById('card-container');
-var day1El = document.getElementById('day-1');
-var day2El = document.getElementById('day-2');
-var day3El = document.getElementById('day-3');
-var day4El = document.getElementById('day-4');
-var day5El = document.getElementById('day-5');
+var searchHistoryEl = document.querySelector('.search-history');
 
 // ASSIGNMENT CODE
 
@@ -25,7 +21,8 @@ var citiesArray = [];
 // init function that displays default city weather forecast
 function init() {
   getWeather('New York');
-  getCities();
+  citiesArray = getCities();
+  renderCities();
 }
 // Retrieve search history from local storage on load
 function getCities() {
@@ -131,7 +128,16 @@ function renderForecast(data) {
 }
 
 // Display previously searched cities
-
+function renderCities() {
+  if (citiesArray !== null) {
+    for (i = 0; i < citiesArray.length; i++) {
+      searchHistoryEl.innerHTML += 
+      `
+      <button type="button" class="btn btn-secondary w-100 mb-1">${citiesArray[i]}</button>
+      `
+    }
+  }
+}
 
 // INITIALIZATION
 init();
