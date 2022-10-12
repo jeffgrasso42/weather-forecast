@@ -31,7 +31,22 @@ h1 {
   border: none;
 }
 
+#search-card button {
+  margin-bottom: 5px;
+}
+
+#search-bar,
 #submit-btn {
+  width: 100%;
+}
+
+#search-bar {
+  margin-bottom: 5px;
+  padding: 5px 8px;
+}
+
+#submit-btn {
+  display: block;
   background: var(--royal-blue);
 }
 

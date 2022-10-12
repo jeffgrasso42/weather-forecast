@@ -16,9 +16,11 @@
   <main class="d-flex container-fluid">
     <!-- 3/12 col search and city selector -->
     <aside id="search-card" class="card col-3">
-      <h2>Search for a City:</h2>
-      <input type="text" placeholder="Enter a city">
-      <button id="submit-btn" type="button" class="btn btn-primary">Search</button>
+      <form method="POST">
+        <h2>Search for a City:</h2>
+        <input id="search-bar" type="text" placeholder="Enter a city">
+        <input id="submit-btn" type="submit" class="btn btn-primary" value="Search">
+      </form>
 
       <hr>
 
