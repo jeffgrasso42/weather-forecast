@@ -42,24 +42,26 @@ function getWeather(city) {
     lat = geoData[0].lat;
     lon = geoData[0].lon;
 
-    // use data to 
+    // Current Weather API call
     var weatherURL = 'https://api.openweathermap.org/data/2.5/weather?lat='+ lat + '&lon=' + lon + '&appid=' + weatherKey + '&units=imperial';
     fetch(weatherURL).then(weatherResponse => {
       return weatherResponse.json();
     }).then(weatherData => {
-      console.log(weatherData);
       renderWeather(weatherData);
-    })
+    });
   });
 }
 
-// Render data from API on page
+// RENDERING FUNCTIONS
+
 function renderWeather(data) {
   todayContainerEl.children[0].innerHTML = data.name;
   todayContainerEl.children[1].innerHTML = data.main.temp + "&deg; F";
   todayContainerEl.children[2].innerHTML = data.wind.speed + " MPH";
   todayContainerEl.children[3].innerHTML = data.main.humidity + "&#37;"
 }
+
+
 
 // INITIALIZATION
 init();
