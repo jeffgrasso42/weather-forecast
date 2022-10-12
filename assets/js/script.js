@@ -25,12 +25,20 @@ var citiesArray = [];
 // init function that displays default city weather forecast
 function init() {
   getWeather('New York');
+  getCities();
 }
 // Retrieve search history from local storage on load
+function getCities() {
+  return JSON.parse(localStorage.getItem("cities"));
+}
 
 // Store searched city in local storage
 function storeCity(city) {
+  var storedCities = getCities();
+  if (storedCities !== null) citiesArray = storedCities;
 
+  citiesArray.push(city);
+  localStorage.setItem('cities', JSON.stringify(citiesArray));
 }
 
 // checkSelection function that handles user input
@@ -121,6 +129,9 @@ function renderForecast(data) {
     forecastCardContainerEl.children[i].children[4].innerHTML = forecastObjects[dayIdx].main.humidity + "&#37;"
   }
 }
+
+// Display previously searched cities
+
 
 // INITIALIZATION
 init();
