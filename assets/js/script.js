@@ -15,6 +15,7 @@ var searchCardEl = document.getElementById('search-card');
 // variable for the current weather container
 var todayContainerEl = document.querySelector('.today-container');
 // variables for the 5-day forecast cards
+var forecastCardContainerEl = document.getElementById('card-container');
 var day1El = document.getElementById('day-1');
 var day2El = document.getElementById('day-2');
 var day3El = document.getElementById('day-3');
@@ -35,20 +36,21 @@ function init() {
 
 // Get the latitude and longitude for the weather API call
 function getWeather(city) {
-  var geoURL = 'http://api.openweathermap.org/geo/1.0/direct?q=' + city + '&limit=1&appid=' + weatherKey;
-  fetch(geoURL).then(geoResponse => {
-    return geoResponse.json();
-  }).then(geoData => {
-    lat = geoData[0].lat;
-    lon = geoData[0].lon;
+  // Current Weather API call
+  var weatherURL = 'https://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=' + weatherKey + '&units=imperial';
+  fetch(weatherURL).then(weatherResponse => {
+    return weatherResponse.json();
+  }).then(weatherData => {
+    renderWeather(weatherData);
+  });
 
-    // Current Weather API call
-    var weatherURL = 'https://api.openweathermap.org/data/2.5/weather?lat='+ lat + '&lon=' + lon + '&appid=' + weatherKey + '&units=imperial';
-    fetch(weatherURL).then(weatherResponse => {
-      return weatherResponse.json();
-    }).then(weatherData => {
-      renderWeather(weatherData);
-    });
+  // 5-day Forecast API call
+  var forecastURL = 'https://api.openweathermap.org/data/2.5/forecast?q=' + city + '&appid=' + weatherKey + '&units=imperial';
+  fetch(forecastURL).then(forecastResponse => {
+    return forecastResponse.json();
+  }).then(forecastData => {
+    console.log(forecastData);
+    renderForecast(forecastData);
   });
 }
 
@@ -58,10 +60,22 @@ function renderWeather(data) {
   todayContainerEl.children[0].innerHTML = data.name;
   todayContainerEl.children[1].innerHTML = data.main.temp + "&deg; F";
   todayContainerEl.children[2].innerHTML = data.wind.speed + " MPH";
-  todayContainerEl.children[3].innerHTML = data.main.humidity + "&#37;"
+  todayContainerEl.children[3].innerHTML = data.main.humidity + "&#37;";
 }
 
-
+function renderForecast(data) {
+  console.log(data.list[0].dt_txt);
+  var forecastDays = data.list;
+  console.log(forecastDays);
+for (var i = 0; i < forecastDays.length; i++) {
+  var date = forecastDays[i*8].dt_txt;
+  forecastCardContainerEl.children[i].children[0].innerHTML = moment(date).format('MM/DD/YYYY');
+  forecastCardContainerEl.children[i].children[1].innerHTML = 'icon';
+  forecastCardContainerEl.children[i].children[2].innerHTML = forecastDays[i*8].main.temp + "&deg; F";
+  forecastCardContainerEl.children[i].children[3].innerHTML = forecastDays[i*8].wind.speed + " MPH";
+  forecastCardContainerEl.children[i].children[4].innerHTML = forecastDays[i*8].main.humidity + "&#37;"
+}
+}
 
 // INITIALIZATION
 init();

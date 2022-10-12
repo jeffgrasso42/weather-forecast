@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
   <link rel="stylesheet" href="./assets/css/style.css">
+  <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"
+    ></script>
   <title>Weather Forecast</title>
 </head>
 <body>
@@ -47,7 +51,7 @@
       <!-- 9/12 col for 5-day forecast -->
       <div class="forecast-container">
         <h3>5-Day Forecast:</h3>
-        <div class="card-container d-flex flex-wrap justify-content-around">
+        <div id="card-container" class="d-flex flex-wrap justify-content-around">
           <div id="day-1" class="card daily-forecast">
             <h4 data-city="" data-date="">Atlanta</h4>
             <p id="day-1-icon">icon</p>
@@ -87,8 +91,8 @@
       </div>
     </section>
   </main>
-  <script src="https://api.openweathermap.org/data/2.5/weather?lat=40.7127281&lon=-74.0060152&appid=66b15a5b3951d15de56c5d2c4e2ddcba&units=imperial">
-  </script>
+  <!-- <script src="https://api.openweathermap.org/data/2.5/weather?lat=40.7127281&lon=-74.0060152&appid=66b15a5b3951d15de56c5d2c4e2ddcba&units=imperial">
+  </script> -->
   <script src="./assets/js/script.js"></script>
 </body>
 </html>
